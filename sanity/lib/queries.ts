@@ -13,7 +13,7 @@ export async function getSiteSettings() {
         email, instagram, behance, vsco
       }`,
       {},
-      { next: { revalidate: 60 } }
+      { cache: "no-store" }
     );
   } catch { return null; }
 }
@@ -28,7 +28,7 @@ export async function getAllProjects() {
         coverImage
       }`,
       {},
-      { next: { revalidate: 60 } }
+      { cache: "no-store" }
     );
   } catch { return []; }
 }
@@ -43,7 +43,7 @@ export async function getProject(slug: string) {
         coverImage, photos
       }`,
       { slug },
-      { next: { revalidate: 60 } }
+      { cache: "no-store" }
     );
   } catch { return null; }
 }
