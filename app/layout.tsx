@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeScript from "@/components/ThemeScript";
-import TweaksPanel from "@/components/TweaksPanel";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -30,7 +29,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${archivo.variable} ${ibmPlexMono.variable}`}>
         {children}
-        <TweaksPanel />
       </body>
     </html>
   );
