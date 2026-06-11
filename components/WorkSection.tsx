@@ -40,10 +40,10 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
             <div className="card-img-wrap">
               {p.coverImage && (
                 <Image
-                  src={urlFor(p.coverImage).width(900).height(1125).url()}
+                  src={urlFor(p.coverImage).width(900).height(600).url()}
                   alt={p.title}
                   width={900}
-                  height={1125}
+                  height={600}
                   className="photo-img"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
