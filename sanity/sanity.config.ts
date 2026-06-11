@@ -4,8 +4,9 @@ import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemas";
 
 export default defineConfig({
-  name: "anna-photography",
+  name: "default",
   title: "ANNA Photography",
+  basePath: "/studio",
 
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
