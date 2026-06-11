@@ -2,21 +2,26 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { getProject, getAdjacentProjects, getAllProjects, getSiteSettings } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 
 export const revalidate = 60;
+// Don't block build when Sanity isn't configured yet
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  const projects = await getAllProjects();
-  return (projects ?? []).map((p: { slug: string }) => ({ slug: p.slug }));
+  try {
+    const projects = await getAllProjects();
+    return (projects ?? []).map((p: { slug: string }) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
 }
 
 const WIDE_AT = new Set([0, 1, 6]);
 
 export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  const [project, { prev, next }, settings] = await Promise.all([
+  const [project, adjacent, settings] = await Promise.all([
     getProject(params.slug),
     getAdjacentProjects(params.slug),
     getSiteSettings(),
@@ -24,7 +29,8 @@ export default async function ProjectPage({ params }: { params: { slug: string }
 
   if (!project) notFound();
 
-  const allPhotos = [project.coverImage, ...(project.photos ?? [])];
+  const allPhotos = [project.coverImage, ...(project.photos ?? [])].filter(Boolean);
+  const email = settings?.email ?? "hello@annaphotography.com";
 
   return (
     <>
@@ -67,24 +73,24 @@ export default async function ProjectPage({ params }: { params: { slug: string }
           })}
         </div>
 
-        <nav className="project-pager mono" aria-label="Projects">
-          <Link href={`/project/${prev.slug}`} className="pager-link">
-            <span className="pager-dir">← Previous</span>
-            <span className="pager-title">{prev.title}</span>
-          </Link>
-          <Link href={`/project/${next.slug}`} className="pager-link">
-            <span className="pager-dir">Next →</span>
-            <span className="pager-title">{next.title}</span>
-          </Link>
-        </nav>
+        {adjacent.prev && adjacent.next && (
+          <nav className="project-pager mono" aria-label="Projects">
+            <Link href={`/project/${adjacent.prev.slug}`} className="pager-link">
+              <span className="pager-dir">← Previous</span>
+              <span className="pager-title">{adjacent.prev.title}</span>
+            </Link>
+            <Link href={`/project/${adjacent.next.slug}`} className="pager-link">
+              <span className="pager-dir">Next →</span>
+              <span className="pager-title">{adjacent.next.title}</span>
+            </Link>
+          </nav>
+        )}
       </main>
 
       <footer className="footer">
         <div className="footer-bottom mono">
           <span>&copy; {new Date().getFullYear()} Anna Photography</span>
-          <a className="footer-mail" href={`mailto:${settings?.email ?? "hello@annaphotography.com"}`}>
-            {settings?.email ?? "hello@annaphotography.com"}
-          </a>
+          <a className="footer-mail" href={`mailto:${email}`}>{email}</a>
         </div>
       </footer>
     </>
