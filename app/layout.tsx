@@ -7,8 +7,8 @@ import TweaksPanel from "@/components/TweaksPanel";
 const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
-  axes: ["wdth"],
-  display: "swap",
+  weight: ["100", "400", "500", "700", "900"],
+  style: ["normal", "italic"],
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
