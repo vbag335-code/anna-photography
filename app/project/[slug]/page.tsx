@@ -5,8 +5,7 @@ import Header from "@/components/Header";
 import { getProject, getAdjacentProjects, getAllProjects, getSiteSettings } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 
-export const revalidate = 60;
-// Don't block build when Sanity isn't configured yet
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 export async function generateStaticParams() {

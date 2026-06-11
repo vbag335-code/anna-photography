@@ -5,7 +5,7 @@ import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
 import { getSiteSettings, getAllProjects } from "@/sanity/lib/queries";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 const FALLBACK_SETTINGS = {
   siteName: "ANNA",
