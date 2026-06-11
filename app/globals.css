@@ -246,7 +246,7 @@ html[data-bw="1"] .photo-img { filter: grayscale(1) contrast(1.04); }
   align-items: start;
 }
 
-.about-portrait-wrap { aspect-ratio: 3 / 4; overflow: hidden; background: var(--panel); }
+.about-portrait-wrap { aspect-ratio: 3 / 2; overflow: hidden; background: var(--panel); }
 .about-portrait-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .facts { margin: 0; display: grid; gap: 0; align-self: end; }
